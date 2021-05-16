@@ -3,10 +3,14 @@ import express from "express";
 import json from "express";
 import cors from "cors";
 import mongoose from 'mongoose';
+import cookbookRoutes from './routes/cookbooks.js';
 
 config({ path: "./config.env" });
 
 const app = express();
+
+app.use('/cookbooks', cookbookRoutes);
+
 app.use(json());
 app.use(cors());
 

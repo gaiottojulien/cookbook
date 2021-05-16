@@ -1,24 +1,17 @@
-const express = require("express");
+import express from "express";
 const cookbookRoutes = express.Router();
-const dbo = require("../db/conn");
+
+import { listCookbooks, createCookbook } from '../controllers/cookbooks.js';
+//import { getDb } from "../db/conn";
 
 // List all the cookbooks.
-cookbookRoutes.route("/cookbooks").get((req, res) => {
-	let db_connect = dbo.getDb("cookbook-app");
-	db_connect
-		.collection("cookbooks")
-		.find({})
-		.toArray((err, result) => {
-			if (err) {
-				throw err;
-			}
-			res.json(result);
-		});
-});
+cookbookRoutes.get('/', listCookbooks);
+cookbookRoutes.post('/', createCookbook);
 
+/*
 // Find a cookbook by id.
-cookbookRoutes.route("/cookbooks/:id").get((req, res) => {
-	let db_connect = dbo.getDb("cookbook-app");
+cookbookRoutes.route("/:id").get((req, res) => {
+	let db_connect = getDb("cookbook-app");
 	db_connect
 		.collection("cookbooks")
 		.find({ id: req.body.id })
@@ -31,8 +24,8 @@ cookbookRoutes.route("/cookbooks/:id").get((req, res) => {
 });
 
 // Create a new cookbook.
-cookbookRoutes.route("/cookbooks/add").post((req, res) => {
-	let db_connect = dbo.getDb("cookbook-app");
+cookbookRoutes.route("/add").post((req, res) => {
+	let db_connect = getDb("cookbook-app");
 	let cookbookToCreate = {
 		cookbook_name: req.body.cookbook_name,
 		cookbook_description: req.body.cookbook_description
@@ -49,8 +42,8 @@ cookbookRoutes.route("/cookbooks/add").post((req, res) => {
 });
 
 // Update a cookbook by id.
-cookbookRoutes.route("/cookbooks/update/:id").post((req, res) => {
-	let db_connect = dbo.getDb("cookbook-app");
+cookbookRoutes.route("/update/:id").post((req, res) => {
+	let db_connect = getDb("cookbook-app");
 	let query = { id: req.body.id };
 	let cookbookToUpdate = {
 		$set: {
@@ -74,8 +67,8 @@ cookbookRoutes.route("/cookbooks/update/:id").post((req, res) => {
 });
 
 // Delete a cookbook by id
-cookbookRoutes.route("/cookbooks/delete/:id").delete((req, res) => {
-	let db_connect = dbo.getDb("cookbook-app");
+cookbookRoutes.route("/delete/:id").delete((req, res) => {
+	let db_connect = getDb("cookbook-app");
 	var query = { id: req.body.id };
 	db_connect
 		.collection("cookbooks")
@@ -89,5 +82,5 @@ cookbookRoutes.route("/cookbooks/delete/:id").delete((req, res) => {
 			}
 		);
 });
-
-module.exports = cookbookRoutes;
+*/
+export default cookbookRoutes;
