@@ -1,20 +1,20 @@
-const express = require("express");
+import { config } from 'dotenv';
+import express from "express";
+import json from "express";
+import cors from "cors";
+import mongoose from 'mongoose';
+
+config({ path: "./config.env" });
+
 const app = express();
-const cors = require("cors");
-require("dotenv").config({ path: "./config.env" });
-const port = process.env.PORT || 5000;
+app.use(json());
 app.use(cors());
-app.use(express.json());
-app.use(require("./routes/cookbooks"));
-// get driver connection
-const dbo = require("./db/conn");
 
-app.listen(port, () => {
-	// perform a database connection when server starts
-	dbo.connectToServer(function (err) {
-		if (err) console.error(err);
-		console.log('Successfully connected to MongoDB.');
+const PORT = process.env.PORT || 5000;
+const ATLAS_URI = process.env.ATLAS_URI;
 
-	});
-	console.log(`Server is running on port: ${port}`);
-});
+mongoose.connect(ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+	.then(() => app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`)))
+	.catch(() => console.log(error.message));
+
+mongoose.set('useFindAndModify', false);
