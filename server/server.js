@@ -19,6 +19,6 @@ const ATLAS_URI = process.env.ATLAS_URI;
 
 mongoose.connect(ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`)))
-	.catch(() => console.log(error.message));
+	.catch((error) => console.log(error.message));
 
 mongoose.set('useFindAndModify', false);
