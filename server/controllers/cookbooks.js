@@ -28,3 +28,15 @@ export const findCookbookById = async (req, res) => {
 		res.status(404).json({ message: error.message });
 	}
 };
+
+export const updateCookbook = async (req, res) => {
+	const cookbookToUpdate = new Cookbook(req.body);
+	cookbookToUpdate._id = req.query.id;
+
+	try {
+		await cookbookToUpdate.update();
+		res.status(200).json(cookbookToUpdate);
+	} catch (error) {
+		res.status(409).json({ message: error.message });
+	}
+};
