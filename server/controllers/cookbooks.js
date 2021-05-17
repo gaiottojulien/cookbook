@@ -19,3 +19,12 @@ export const createCookbook = async (req, res) => {
 		res.status(409).json({ message: error.message });
 	}
 };
+
+export const findCookbookById = async (req, res) => {
+	try {
+		const cookbookFound = await Cookbook.findById(req.query.id);
+		res.status(200).json(cookbookFound);
+	} catch (error) {
+		res.status(404).json({ message: error.message });
+	}
+};
