@@ -40,3 +40,15 @@ export const updateCookbook = async (req, res) => {
 		res.status(409).json({ message: error.message });
 	}
 };
+
+export const deleteCookbook = async (req, res) => {
+	const cookbookToDelete = new Cookbook(req.body);
+	cookbookToDelete._id = req.query.id;
+
+	try {
+		await cookbookToDelete.delete();
+		res.status(200);
+	} catch (error) {
+		res.status(409).json({ message: error.message });
+	}
+};
